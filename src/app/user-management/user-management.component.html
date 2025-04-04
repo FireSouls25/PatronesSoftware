@@ -1,0 +1,12 @@
+<h2>User Management</h2>
+
+<div>
+  <label for="newUserName">New User Name:</label>
+  <input type="text" id="newUserName" [(ngModel)]="newUserName">
+  <button (click)="addUser()">Add User</button>
+</div>
+
+<h3>Registered Users</h3>
+<ul>
+  <li *ngFor="let user of users">{{ user.name }}</li>
+</ul>

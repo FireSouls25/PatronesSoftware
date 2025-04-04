@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.user-list {
+  margin-top: 20px;
+}
+
+.user-item {
+  margin-bottom: 10px;
+}

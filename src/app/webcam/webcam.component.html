@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="webcam-container">
+    <webcam #webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+      *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+      (initError)="handleInitError($event)"
+    ></webcam>
+    <video #videoElement width="500" height="500" *ngIf="showWebcam"></video>
+  </div>
+  <div class="action-buttons">
+    <button (click)="triggerSnapshot();">Take A Snapshot</button>
+    <button (click)="toggleWebcam();">Toggle Webcam</button>
+    <button (click)="showNextWebcam(true);">Next Camera</button>
+  </div>
+  <div class="snapshots">
+    <div class="snapshot" *ngIf="webcamImage">
+      <h2>Nice one!</h2>
+      <img [src]="webcamImage.imageAsDataUrl"/>
+    </div>
+  </div>
+
+  <div class="errors" *ngIf="errors.length > 0">
+    <h3>Oops, something went wrong:</h3>
+    <ul>
+      <li *ngFor="let error of errors">{{error|json}}</li>
+    </ul>
+  </div>
+</div>
