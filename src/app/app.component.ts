@@ -9,8 +9,8 @@ import { FaceRecognitionComponent } from './face-recognition/face-recognition.co
   standalone: true,
   imports: [RouterOutlet, WebcamComponent, UserManagementComponent, FaceRecognitionComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'mi-proyecto';
+  title = 'Face Recognition App';
 }

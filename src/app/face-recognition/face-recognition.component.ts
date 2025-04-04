@@ -29,33 +29,28 @@ export class FaceRecognitionComponent implements OnInit {
 
     const image = new Image();
     image.src = this.webcamComponent.webcamImage.imageAsDataUrl;
-    image.onload = async () => {
-      try {
-        const descriptors = await this.faceService.getFaceDescriptors(image);
-        if (descriptors.length === 0) {
-          alert('No face detected. Please try again.');
-          return;
-        }
 
-        // Assuming only one face is detected
-        const descriptor = descriptors[0];
-
-        // Load users and their descriptors (replace with your actual data loading)
-        const labeledFaceDescriptors = await this.usersToLabeledFaceDescriptors();
-
-        if (labeledFaceDescriptors.length === 0) {
-          alert('No users registered yet.');
-          return;
-        }
-
-        await this.faceService.createFaceMatcher(labeledFaceDescriptors);
-        const bestMatch = await this.faceService.findBestMatch(image, descriptor);
-        this.recognizedName = bestMatch;
-      } catch (error) {
-        console.error('Error recognizing face:', error);
-        alert('Failed to recognize face. See console for details.');
+    try {
+      const descriptors = await this.faceService.getFaceDescriptors(image);
+      if (descriptors.length === 0) {
+        alert('No face detected. Please try again.');
+        return;
       }
-    };
+
+      const labeledFaceDescriptors = await this.usersToLabeledFaceDescriptors();
+
+      if (labeledFaceDescriptors.length === 0) {
+        alert('No users registered yet.');
+        return;
+      }
+
+      await this.faceService.createFaceMatcher(labeledFaceDescriptors);
+      const bestMatch = await this.faceService.findBestMatch(image, descriptors[0]);
+      this.recognizedName = bestMatch;
+    } catch (error) {
+      console.error('Error recognizing face:', error);
+      alert('Failed to recognize face. See console for details.');
+    }
   }
 
   async usersToLabeledFaceDescriptors(): Promise<faceapi.LabeledFaceDescriptors[]> {

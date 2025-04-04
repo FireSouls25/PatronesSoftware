@@ -36,23 +36,22 @@ export class UserManagementComponent implements OnInit {
 
     const image = new Image();
     image.src = this.webcamComponent.webcamImage.imageAsDataUrl;
-    image.onload = async () => {
-      try {
-        const descriptors = await this.faceService.getFaceDescriptors(image);
-        if (descriptors.length === 0) {
-          alert('No face detected. Please try again.');
-          return;
-        }
 
-        this.users = [...this.users, { name: this.newUserName, descriptors: descriptors }];
-        this.saveUsers();
-        this.newUserName = '';
-        alert('User added successfully!');
-      } catch (error) {
-        console.error('Error adding user:', error);
-        alert('Failed to add user. See console for details.');
+    try {
+      const descriptors = await this.faceService.getFaceDescriptors(image);
+      if (descriptors.length === 0) {
+        alert('No face detected. Please try again.');
+        return;
       }
-    };
+
+      this.users = [...this.users, { name: this.newUserName, descriptors: descriptors }];
+      this.saveUsers();
+      this.newUserName = '';
+      alert('User added successfully!');
+    } catch (error) {
+      console.error('Error adding user:', error);
+      alert('Failed to add user. See console for details.');
+    }
   }
 
   loadUsers() {
